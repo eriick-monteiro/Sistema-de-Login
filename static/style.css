@@ -1,0 +1,56 @@
+:root {
+    --color-cream: #AECECF;     /* cor mais clara, suave, pode ser usada em fundos ou textos */
+    --color-seafoam: #619798f4; /* verde-água translúcido, tom intermediário com leve transparência */
+    --color-teal: #4D797A;      /* tom médio de azul petróleo */
+    --color-forest: #254E50;    /* verde petróleo escuro */
+    --color-deep-teal: #152f31; /* verde-azulado bem escuro */
+    --color-midnight: #102c2e;  /* quase preto azulado */
+    --color-abyss: #0F3233;     /* tom mais escuro e denso da paleta */
+}
+
+body {
+    background-color: var(--color-teal);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+main {
+    margin: 20px;
+    padding: 20px;
+    background-color: var(--color-cream);
+    color: var(--color-abyss);
+    border-radius: 7px;
+    box-shadow: 2px 2px 20px black;
+    max-width: 650px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+button {
+    position: static;
+    border: 2px solid var(--color-teal);
+    background-color: var(--color-deep-teal);
+    color: var(--color-teal);
+    padding: 10px 20px;
+    background: none;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: 0.2s ease;
+}
+
+input {
+    background-color: var(--color-teal);
+    color: var(--color-abyss);
+}
+
+button:hover {
+    background-color: var(--color-teal);
+    color: var(--color-deep-teal);
+}
+
+.marked {
+    text-decoration: none;
+    font-weight: bold;
+    color: var(--color-abyss);
+}

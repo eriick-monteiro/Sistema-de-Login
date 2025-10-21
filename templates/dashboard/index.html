@@ -1,0 +1,9 @@
+{% extends 'head.html' %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+    <main>
+        <h2>Bem-vindo, {{ user }}!</h2>
+        <a href="{{ url_for('logout') }}">Sair</a>
+    </main>
+{% endblock %}
+</html>
