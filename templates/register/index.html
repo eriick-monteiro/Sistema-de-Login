@@ -1,15 +1,13 @@
 {% extends 'head.html' %}
 {% block title %}Sign Up{% endblock %}
 {% block content %}
-    <main>
-        <h2>Sign Up to {{site_name}}</h2>
-        <form action="{{ url_for('register') }}" method="POST">
-            <input type="text" name="username" placeholder="Username" required>
-            <input type="password" name="password" placeholder="Password" required>
-            <button type="submit">Sign Up</button>
-        </form>
+    <h2>Sign Up to {{site_name}}</h2>
+    <form action="{{ url_for('register') }}" method="POST">
+        <input type="text" name="username" placeholder="Username" required>
+        <input type="password" name="password" placeholder="Password" required>
+        <button type="submit">Sign Up</button>
+    </form>
 
-        <p>Already have an account? <a class="marked" href="{{ url_for('index') }}">Sign In</a></p>
-    </main>
+    <p>Already have an account? <a class="marked" href="{{ url_for('index') }}">Sign In</a></p>
 {% endblock %}
 </html>
