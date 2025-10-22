@@ -22,30 +22,36 @@ bcrypt = Bcrypt(app)
 @app.route('/')
 def index():
     if 'user' in session:
-        return redirect(url_for('dashboard'))
-    return render_template('login/index.html', site_name = SITE_NAME)
-    
-    # return render_template('home/index.html')
+        # User Logged - show Name and Log Out
+        return render_template('home/index.html', user = session['user'])
+    else:
+        # User not Logged - show Sign In / Sign Uo
+        return render_template('home/index.html', user = None)
 
 
 # Log In Route
-@app.route('/login', methods=['POST'])
+@app.route('/login', methods=['POST', 'GET'])
 def login():
-    username = request.form['username']
-    password = request.form['password']
-
-    conn = sqlite3.connect(f'{DB_NAME}.db')
-    cursor = conn.cursor()
-    cursor.execute("SELECT password_hash FROM users WHERE username = ?", (username,))
-    result = cursor.fetchone()
-    conn.close()
-
-    if result and bcrypt.check_password_hash(result[0], password):
-        session['user'] = username
+    if 'user' in session:
         return redirect(url_for('dashboard'))
-    else:
-        flash("Username or Password Incorrects.", "error")
-        return redirect(url_for('index'))
+
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+
+        conn = sqlite3.connect(f'{DB_NAME}.db')
+        cursor = conn.cursor()
+        cursor.execute("SELECT password_hash FROM users WHERE username = ?", (username,))
+        result = cursor.fetchone()
+        conn.close()
+
+        if result and bcrypt.check_password_hash(result[0], password):
+            session['user'] = username
+            return redirect(url_for('dashboard'))
+        else:
+            flash("Username or Password Incorrects.", "error")
+            return redirect(url_for('login'))
+    return render_template('login/index.html', user = None)
 
 
 # Sign Up/Register Route
