@@ -23,10 +23,10 @@ bcrypt = Bcrypt(app)
 def index():
     if 'user' in session:
         # User Logged - show Name and Log Out
-        return render_template('home/index.html', user = session['user'])
+        return render_template('home/index.html', user = session['user'], site_name = SITE_NAME)
     else:
         # User not Logged - show Sign In / Sign Uo
-        return render_template('home/index.html', user = None)
+        return render_template('home/index.html', user = None, site_name = SITE_NAME)
 
 
 # Log In Route
@@ -51,7 +51,7 @@ def login():
         else:
             flash("Username or Password Incorrects.", "error")
             return redirect(url_for('login'))
-    return render_template('login/index.html', user = None)
+    return render_template('login/index.html', user = None, site_name = SITE_NAME)
 
 
 # Sign Up/Register Route
