@@ -18,6 +18,12 @@
 
 ## 🚀 Como rodar o projeto
 
+### 📥 Clonar o repositório
+```bash
+git clone https://github.com/eriick-monteiro/Sistema-de-Login.git
+cd Sistema-de-Login
+```
+
 ### ✅ Pré-requisitos
 
 ### .env
@@ -40,6 +46,7 @@ SECRET_KEY = 'hashed_token'
 $ python3 -m venv venv
 ```
 
+
 ### Ativando o Ambiente Virtual
 ```bash
 # Linux / macOS
@@ -55,11 +62,11 @@ $ .\venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-### 📥 Clonar o repositório
+### Criar Tabelas
 ```bash
-git clone https://github.com/eriick-monteiro/Sistema-de-Login.git
-cd Sistema-de-Login
+$ python3 init_db.py
 ```
+
 
 ### ▶️ Rodar em ambiente de desenvolvimento
 
@@ -73,4 +80,4 @@ Por padrão o Flask vai rodar em:
 
 
 ### 📸 Preview
-
+![homepage](images/image.png)

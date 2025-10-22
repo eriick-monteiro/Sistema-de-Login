@@ -7,18 +7,24 @@ import os
 load_dotenv()
 
 DB_NAME = os.getenv("DB_NAME")
-TABLE_NAME = os.getenv("TABLE_NAME")
+TABLE_USERS = os.getenv("TABLE_USERS")
+TABLE_POSTS = os.getenv("TABLE_POSTS")
 
 
 # Creating Connection and Cursor
-conn = sqlite3.connect(f'database/{DB_NAME}.db')
-cursor = conn.cursor()
+try:
+    conn = sqlite3.connect(f'database/{DB_NAME}.db')
+    cursor = conn.cursor()
+
+    print(f"✅ Database '{DB_NAME}' successfuly created.")
+except:
+    print(f"❌ Error. Something went wrong on creating of database {DB_NAME}.")
 
 
 # Creating Users Table in Database
 try:
     cursor.execute(f'''
-    CREATE TABLE IF NOT EXISTS {TABLE_NAME} (
+    CREATE TABLE IF NOT EXISTS {TABLE_USERS} (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         username TEXT UNIQUE NOT NULL,
         password_hash TEXT NOT NULL
@@ -28,7 +34,6 @@ try:
     conn.commit()
     conn.close()
 
-    print(f"✅ Database '{DB_NAME}' successfuly created.")
-    print(f"✅ Table '{TABLE_NAME}' successfuly created.")
+    print(f"✅ Table '{TABLE_USERS}' successfuly created.")
 except:
-    print("❌ Error. Something went wrong.")
+    print(f"❌ Error. Something went wrong on creating of {TABLE_USERS} table.")

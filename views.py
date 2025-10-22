@@ -1,5 +1,4 @@
 from flask import render_template, request, redirect, url_for, session, flash
-from database_actions import create_user
 from flask_bcrypt import Bcrypt
 from dotenv import load_dotenv
 from app import app
@@ -10,7 +9,7 @@ import os
 load_dotenv()
 
 DB_NAME = os.getenv("DB_NAME")
-TABLE_NAME = os.getenv("TABLE_USERS")
+TABLE_USERS = os.getenv("TABLE_USERS")
 SITE_NAME = os.getenv("SITE_NAME")
 
 
@@ -23,10 +22,10 @@ bcrypt = Bcrypt(app)
 def index():
     if 'user' in session:
         # User Logged - show Name and Log Out
-        return render_template('home/index.html', user = session['user'], site_name = SITE_NAME)
+        return render_template('index.html', user = session['user'], site_name = SITE_NAME)
     else:
         # User not Logged - show Sign In / Sign Uo
-        return render_template('home/index.html', user = None, site_name = SITE_NAME)
+        return render_template('index.html', user = None, site_name = SITE_NAME)
 
 
 # Log In Route
@@ -41,7 +40,7 @@ def login():
 
         conn = sqlite3.connect(f'database/{DB_NAME}.db')
         cursor = conn.cursor()
-        cursor.execute("SELECT password_hash FROM users WHERE username = ?", (username,))
+        cursor.execute(f"SELECT password_hash FROM {TABLE_USERS} WHERE username = ?", (username,))
         result = cursor.fetchone()
         conn.close()
 
@@ -63,7 +62,7 @@ def register():
 
         conn = sqlite3.connect(f'database/{DB_NAME}.db')
         cursor = conn.cursor()
-        cursor.execute(f"SELECT id FROM {TABLE_NAME} WHERE username = ?", (username,))
+        cursor.execute(f"SELECT id FROM {TABLE_USERS} WHERE username = ?", (username,))
         existing = cursor.fetchone()
 
         if existing:
@@ -77,7 +76,7 @@ def register():
 
 
         # Insert in Database
-        cursor.execute(f"INSERT INTO {TABLE_NAME} (username, password_hash) VALUES (?, ?)", (username, password_hash))
+        cursor.execute(f"INSERT INTO {TABLE_USERS} (username, password_hash) VALUES (?, ?)", (username, password_hash))
         conn.commit()
         conn.close()
 
