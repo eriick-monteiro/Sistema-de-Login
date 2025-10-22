@@ -11,7 +11,7 @@ TABLE_NAME = os.getenv("TABLE_NAME")
 
 
 # Creating Connection and Cursor
-conn = sqlite3.connect(f'{DB_NAME}.db')
+conn = sqlite3.connect(f'database/{DB_NAME}.db')
 cursor = conn.cursor()
 
 

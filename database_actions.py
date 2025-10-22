@@ -18,7 +18,7 @@ bcrypt = Bcrypt(app)
 # Function to Register User in Database
 def create_user(username, password):
     password_hash = bcrypt.generate_password_hash(password).decode('utf-8')
-    conn = sqlite3.connect(f'{DB_NAME}.db')
+    conn = sqlite3.connect(f'database/{DB_NAME}.db')
     cursor = conn.cursor()
 
     try:

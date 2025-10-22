@@ -10,7 +10,7 @@ import os
 load_dotenv()
 
 DB_NAME = os.getenv("DB_NAME")
-TABLE_NAME = os.getenv("TABLE_NAME")
+TABLE_NAME = os.getenv("TABLE_USERS")
 SITE_NAME = os.getenv("SITE_NAME")
 
 
@@ -39,7 +39,7 @@ def login():
         username = request.form['username']
         password = request.form['password']
 
-        conn = sqlite3.connect(f'{DB_NAME}.db')
+        conn = sqlite3.connect(f'database/{DB_NAME}.db')
         cursor = conn.cursor()
         cursor.execute("SELECT password_hash FROM users WHERE username = ?", (username,))
         result = cursor.fetchone()
@@ -61,7 +61,7 @@ def register():
         username = request.form['username']
         password = request.form['password']
 
-        conn = sqlite3.connect(f'{DB_NAME}.db')
+        conn = sqlite3.connect(f'database/{DB_NAME}.db')
         cursor = conn.cursor()
         cursor.execute(f"SELECT id FROM {TABLE_NAME} WHERE username = ?", (username,))
         existing = cursor.fetchone()
