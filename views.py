@@ -7,15 +7,10 @@ import os
 
 # Loading Environment Variables
 load_dotenv()
-
-DB_NAME = os.getenv("DB_NAME")
-TABLE_USERS = os.getenv("TABLE_USERS")
 SITE_NAME = os.getenv("SITE_NAME")
-
 
 # Password Hashing
 bcrypt = Bcrypt(app)
-
 
 # Home Route
 @app.route('/')
@@ -27,7 +22,6 @@ def index():
         # User not Logged - show Sign In / Sign Uo
         return render_template('index.html', user = None, site_name = SITE_NAME)
 
-
 # Log In Route
 @app.route('/login', methods=['POST', 'GET'])
 def login():
@@ -38,9 +32,9 @@ def login():
         username = request.form['username']
         password = request.form['password']
 
-        conn = sqlite3.connect(f'database/{DB_NAME}.db')
+        conn = sqlite3.connect('database/database.db')
         cursor = conn.cursor()
-        cursor.execute(f"SELECT password_hash FROM {TABLE_USERS} WHERE username = ?", (username,))
+        cursor.execute("SELECT password_hash FROM users WHERE username = ?", (username,))
         result = cursor.fetchone()
         conn.close()
 
@@ -52,7 +46,6 @@ def login():
             return redirect(url_for('login'))
     return render_template('login/index.html', user = None, site_name = SITE_NAME)
 
-
 # Sign Up/Register Route
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -60,23 +53,21 @@ def register():
         username = request.form['username']
         password = request.form['password']
 
-        conn = sqlite3.connect(f'database/{DB_NAME}.db')
+        conn = sqlite3.connect('database/database.db')
         cursor = conn.cursor()
-        cursor.execute(f"SELECT id FROM {TABLE_USERS} WHERE username = ?", (username,))
+        cursor.execute("SELECT id FROM users WHERE username = ?", (username,))
         existing = cursor.fetchone()
 
         if existing:
             flash("This user already exists", "error")
             conn.close()
             return redirect(url_for('register'))
-        
 
         # Creating Password's Hash
         password_hash = bcrypt.generate_password_hash(password).decode('utf-8')
 
-
         # Insert in Database
-        cursor.execute(f"INSERT INTO {TABLE_USERS} (username, password_hash) VALUES (?, ?)", (username, password_hash))
+        cursor.execute("INSERT INTO users (username, password_hash) VALUES (?, ?)", (username, password_hash))
         conn.commit()
         conn.close()
 
@@ -86,15 +77,12 @@ def register():
     # GET method -> Show Form
     return render_template('/register/index.html', site_name = SITE_NAME)
 
-
-
 # Dashboard Route
 @app.route('/dashboard')
 def dashboard():
     if 'user' not in session:
         return redirect(url_for('index'))
     return render_template('dashboard/index.html', user=session['user'], site_name = SITE_NAME)
-
 
 # Log Out Route
 @app.route('/logout')
