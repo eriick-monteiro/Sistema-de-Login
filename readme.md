@@ -31,13 +31,7 @@ Certifique-se de ter o arquivo `.env` com o seguinte conteúdo:
 
 ```js
 SITE_NAME = "Site Teste"
-DB_NAME = 'database'
-TABLE_NAME = 'users'
-
-SECRET_KEY = 'hashed_token'
-// To generate:
-// import secrets
-// print(secrets.token_hex(32))
+SECRET_KEY = 'generated_in_generate_hash_key.py'
 ```
 
 
